@@ -19,6 +19,12 @@ header {
     justify-content: space-between;
     padding: 1rem 3rem;
     background: $Color-3;
+    div{
+        display: flex;
+        h3{
+            margin-right: 2rem;
+        }
+    }
 }
 
 .btn {
@@ -46,6 +52,7 @@ header {
         height: 100%;
         width: 100%;
         box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.75);
+        margin: 2rem;
         h3 {
             color: $Color-4;
         }
@@ -53,6 +60,9 @@ header {
             border-radius: 0.5rem;
             padding: 0.2rem;
         }
+    }
+    form#form-registro{
+        display: none;
     }
 }
 
@@ -85,9 +95,16 @@ header {
 }
 
 .visible{
-    display: flex;
+    display: flex !important;
 }
 
 .invisible{
     display: none;
+}
+
+.seccion-lista-empleados {
+    height: 80vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
 }

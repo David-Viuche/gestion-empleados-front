@@ -9,20 +9,36 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
     <link rel="stylesheet" href="./src/css/main.css">
-    <title>Document</title>
+    <title>Gestion Empleados</title>
 </head>
 
 <body>
     <header>
-        <h1>Gestion Empleados</h1>
+        <h1>Gestión Empleados</h1>
+        <div class="invisible" id="cerrar-sesion">
+            <h3 id="nombreUsuario"></h3>
+            <input type="button" class="btn" value="Cerrar Sesión" id="btn-cerrar-sesion">
+        </div>
     </header>
     <section class="seccion-iniciar-sesion" id="seccion-iniciar-sesion">
         <form id="form-inicio-sesion">
-            <h3>Iniciar Sesion</h3>
-            <input type="email" name="correo" id="correo-iniciar-sesion" placeholder="Ingrese su correo..."
-                required="true">
+            <h3>Iniciar Sesión</h3>
+            <input type="email" name="correo" id="correo-iniciar-sesion" placeholder="Ingrese su correo..." required>
             <input type="password" name="contraseña" id="contraseña-iniciar-sesion"
                 placeholder="Ingrese su contraseña..." required>
+            <div>
+                <input type="submit" class="btn" value="Enviar">
+                <input type="reset" class="btn" value="Borrar">
+            </div>
+            <input type="button" class="btn" value="Registrarse" onclick=mostrarFormularioRegistro()>
+        </form>
+        <form id="form-registro">
+            <h3>Registrarse</h3>
+            <input type="text" name="nombre" id="nombre-registrarse" placeholder="Ingrese su nombre..." required>
+            <input type="text" name="apellido" id="apellido-registrarse" placeholder="Ingrese su apellido..." required>
+            <input type="email" name="correo" id="correo-registrarse" placeholder="Ingrese su correo..." required>
+            <input type="password" name="contraseña" id="contraseña-registrarse" placeholder="Ingrese su contraseña..."
+                required>
             <div>
                 <input type="submit" class="btn" value="Enviar">
                 <input type="reset" class="btn" value="Borrar">
@@ -30,7 +46,7 @@
         </form>
     </section>
     <section class="seccion-lista-empleados" id="seccion-lista-empleados">
-        
+        inserte empleados aqui
     </section>
     <div class="alerta" id="alerta">
         <div class="card">
