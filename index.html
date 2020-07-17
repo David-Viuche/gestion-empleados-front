@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css"
+        integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css">
     <link rel="stylesheet" href="./src/css/main.css">
     <title>Document</title>
 </head>
+
 <body>
-    hola buenas tardes!
-    si
+    <header>
+        <h1>Gestion Empleados</h1>
+    </header>
+    <section class="seccion-iniciar-sesion" id="seccion-iniciar-sesion">
+        <form id="form-inicio-sesion">
+            <h3>Iniciar Sesion</h3>
+            <input type="email" name="correo" id="correo-iniciar-sesion" placeholder="Ingrese su correo..."
+                required="true">
+            <input type="password" name="contraseña" id="contraseña-iniciar-sesion"
+                placeholder="Ingrese su contraseña..." required>
+            <div>
+                <input type="submit" class="btn" value="Enviar">
+                <input type="reset" class="btn" value="Borrar">
+            </div>
+        </form>
+    </section>
+    <section class="seccion-lista-empleados" id="seccion-lista-empleados">
+        
+    </section>
+    <div class="alerta" id="alerta">
+        <div class="card">
+            <h2 id="texto-alerta"></h2>
+            <i class="fas fa-times-circle" id="icon-cerrar"></i>
+        </div>
+    </div>
+    <script src="./src/js/index.js"></script>
 </body>
+
 </html>

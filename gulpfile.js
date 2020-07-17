@@ -9,8 +9,9 @@ gulp.task('sass', () => {
 });
 
 gulp.task('default', () => {
-    gulp.watch('./src/sass/**/*.scss', gulp.series('sass', browserSync.reload));
-    gulp.watch('./**/*.html', browserSync.reload);
+    gulp.watch('./src/sass/**/*.scss', gulp.series('sass')).on('change', browserSync.reload);
+    gulp.watch('./src/js/**/*.js').on('change', browserSync.reload);
+    gulp.watch('./**/*.html').on('change', browserSync.reload);
     browserSync.init({
         server: {
             baseDir: './'

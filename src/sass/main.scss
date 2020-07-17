@@ -1,3 +1,93 @@
-body{
-    background: green;
+$Color-1: #a65168;
+$Color-2: #c7cfd9;
+$Color-3: #a6705d;
+$Color-4: #40160c;
+$Color-5: #73473d;
+
+body {
+    background: $Color-2;
+    font-family: "Roboto", sans-serif;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+header {
+    color: $Color-4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 3rem;
+    background: $Color-3;
+}
+
+.btn {
+    padding: 0.5rem;
+    background: $Color-5;
+    color: $Color-2;
+    border-radius: 1rem;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.seccion-iniciar-sesion {
+    height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+        max-width: 250px;
+        max-height: 250px;
+        height: 100%;
+        width: 100%;
+        box-shadow: 0px 0px 7px 1px rgba(0, 0, 0, 0.75);
+        h3 {
+            color: $Color-4;
+        }
+        input {
+            border-radius: 0.5rem;
+            padding: 0.2rem;
+        }
+    }
+}
+
+.alerta {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: #c7cfd959;
+    display: none;
+    .card {
+        width: 30%;
+        height: 6rem;
+        background: $Color-1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        border-radius: 1rem;
+        i{
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    }
+}
+
+.visible{
+    display: flex;
+}
+
+.invisible{
+    display: none;
 }
