@@ -38,6 +38,19 @@ function mostrarFormularioRegistro() {
     document.getElementById('form-registro').classList.toggle('visible');
 }
 
+function verificarSesionIniciada() {
+    const user = JSON.parse(sessionStorage.getItem('user'));
+    if (user) {
+        document.getElementById("seccion-iniciar-sesion").classList.toggle('invisible');
+        document.getElementById("seccion-lista-empleados").classList.toggle('visible');
+        document.getElementById("cerrar-sesion").classList.toggle('invisible');
+        document.getElementById("nombreUsuario").innerText = user.nombre + " " + user.apellido;
+    }
+}
+
+//verificacion incial 
+verificarSesionIniciada();
+
 //peticiones al API
 
 const iniciarSesion = () => {
@@ -148,7 +161,7 @@ const registrarUsuario = () => {
     fetch("http://gestion-empleados.herokuapp.com/usuarios", requestOptions)
         .then(response => response.json())
         .then(result => {
-            if(!result.error){
+            if (!result.error) {
                 generarAlerta('Usuario Creado Correctamente');
                 document.getElementById('form-registro').classList.toggle('visible');
             }
