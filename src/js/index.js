@@ -3,9 +3,18 @@ document.getElementById('icon-cerrar').addEventListener('click', () => {
     document.getElementById('alerta').classList.toggle('visible');
 });
 
+document.getElementById('icon-cerrar-nuevo').addEventListener('click', () => {
+    document.getElementById('nuevo-empleado').classList.toggle('visible');
+});
+
 document.getElementById('form-inicio-sesion').addEventListener('submit', (event) => {
     event.preventDefault();
     iniciarSesion();
+});
+
+document.getElementById('form-nuevo-empleado').addEventListener('submit', (event) => {
+    event.preventDefault();
+    peticionEmpleadoNuevo();
 });
 
 document.getElementById('form-registro').addEventListener('submit', (event) => {
@@ -15,6 +24,10 @@ document.getElementById('form-registro').addEventListener('submit', (event) => {
 
 document.getElementById('btn-cerrar-sesion').addEventListener('click', () => {
     peticionCerrarSesion();
+});
+
+document.getElementById('btn-nuevo-empleado').addEventListener('click', () => {
+    document.getElementById('nuevo-empleado').classList.toggle('visible');
 });
 
 //funciones
@@ -122,14 +135,8 @@ const peticionCerrarSesion = () => {
     fetch("http://gestion-empleados.herokuapp.com/usuarios/logout", requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log(result);
-            if (!result.error) {
-                sessionStorage.clear();
-                window.location.reload();
-            } else {
-                sessionStorage.clear();
-                window.location.reload();
-            }
+            sessionStorage.clear();
+            window.location.reload();
         })
         .catch(error => console.log('error', error));
 }
@@ -163,6 +170,9 @@ const registrarUsuario = () => {
             if (!result.error) {
                 generarAlerta('Usuario Creado Correctamente');
                 document.getElementById('form-registro').classList.toggle('visible');
+            } else {
+                sessionStorage.clear();
+                window.location.reload();
             }
         })
         .catch(error => console.log('error', error));
@@ -182,34 +192,36 @@ const peticionEmpleados = () => {
     fetch("https://gestion-empleados.herokuapp.com/empleados", requestOptions)
         .then(response => response.json())
         .then(result => {
-            const contenedor = document.getElementById('tabla-empleados');
-            let registro = '';
-            result.forEach(el => {
-                registro += `
+            console.log(result);
+            if (!result.error) {
+                const contenedor = document.getElementById('tabla-empleados');
+                let registro = '';
+                result.forEach(el => {
+                    registro += `
                 <tr>
                     <td>${el.nombre}</td>
                     <td>${el.apellido}</td>
                     <td>${el.tipoIdentificacion}</td>
                     <td>${el.numeroIdentificacion}</td>
-                    <td>${el.correo}</td>
-                    <td>${new Date(el.fechaIngreso).toISOString().slice(0, 10)}</td>
+                    <td>${(el.correo) ? el.correo : 'Sin Correo'}</td>
+                    <td>${(el.fechaIngreso) ? new Date(el.fechaIngreso).toISOString().slice(0, 10) : 'Sin Fecha'}</td>
                     <td>$ ${new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP' }).format(el.salario)}</td>
                     <td>`;
 
-                for (let index = 0; index < el.telefonos.length; index++) {
-                    const tel = el.telefonos[index];
-                    if (tel.telefono == null) {
-                        registro += 'Sin telefonos'
-                    } else {
-                        registro += `${tel.telefono}`
-                        if (index != (el.telefonos.length - 1)) {
-                            registro += '<br>';
+                    for (let index = 0; index < el.telefonos.length; index++) {
+                        const tel = el.telefonos[index];
+                        if (tel.telefono == null) {
+                            registro += 'Sin telefonos'
+                        } else {
+                            registro += `${tel.telefono}`
+                            if (index != (el.telefonos.length - 1)) {
+                                registro += '<br>';
+                            }
                         }
                     }
-                }
 
-                registro +=
-                    `
+                    registro +=
+                        `
                     </td>
                     <td>
                         <input type="button" value="Editar" class="btn">
@@ -219,8 +231,87 @@ const peticionEmpleados = () => {
                 </tr>
                 
                 `
-                contenedor.innerHTML = registro;
-            });
+                    contenedor.innerHTML = registro;
+                });
+            } else {
+                peticionCerrarSesion();
+            }
+        })
+        .catch(error => console.log('error', error));
+}
+
+const peticionEmpleadoNuevo = () => {
+    var myHeaders = new Headers();
+    const token = sessionStorage.getItem('token');
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const nombre = document.getElementById('nombre-nuevo-empleado').value;
+    const apellido = document.getElementById('apellido-nuevo-empleado').value;
+    const tipoId = document.getElementById('tipoid-nuevo-empleado').value;
+    const identificacion = document.getElementById('identificacion-nuevo-empleado').value;
+    const correo = document.getElementById('correo-nuevo-empleado').value;
+    let fecha = document.getElementById('fecha-ingreso-nuevo-empleado').value;
+    const salario = document.getElementById('salario-nuevo-empleado').value;
+    const telefono1 = document.getElementById('telefono1-nuevo-empleado').value;
+    const telefono2 = document.getElementById('telefono2-nuevo-empleado').value;
+    const telefono3 = document.getElementById('telefono3-nuevo-empleado').value;
+
+    let telefonos = null;
+
+    if (telefono1 || telefono2 || telefono3) {
+        telefonos = [];
+        if(telefono1){
+            telefonos.push(
+                {
+                    "telefono" : telefono1
+                }     
+            )
+        }
+        if(telefono2){
+            telefonos.push(
+                {
+                    "telefono" : telefono2
+                }     
+            )
+        }
+        if(telefono3){
+            telefonos.push(
+                {
+                    "telefono" : telefono3
+                }     
+            )
+        }
+    }
+
+    if(!fecha){
+        fecha = null;
+    }
+
+    var raw = JSON.stringify(
+        {
+            "nombre": nombre,
+            "apellido": apellido,
+            "tipoIdentificacion": tipoId,
+            "numeroIdentificacion": identificacion,
+            "correo": correo,
+            "fechaIngreso": fecha,
+            "salario": salario,
+            "telefonos": telefonos
+        }
+    );
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch("https://gestion-empleados.herokuapp.com/empleados", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result);
         })
         .catch(error => console.log('error', error));
 }

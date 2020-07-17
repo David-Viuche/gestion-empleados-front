@@ -47,7 +47,11 @@
         </form>
     </section>
     <section class="seccion-lista-empleados" id="seccion-lista-empleados">
-        <div>
+        <div class="titulo-empleados">
+            <h1>Empleados</h1>
+            <input type="button" value="Nuevo Empleado" class="btn" id="btn-nuevo-empleado">
+        </div>
+        <div class="contenedor-tabla">
             <table class="table">
                 <thead>
                     <tr>
@@ -63,27 +67,45 @@
                     </tr>
                 </thead>
                 <tbody id="tabla-empleados">
-                    <!-- <tr>
-                        <td>1</td>
-                        <td>Juan</td>
-                        <td>Rojas</td>
-                        <td>cc</td>
-                        <td>1024263283</td>
-                        <td>juan@coreo.com</td>
-                        <td>2020-07-17T16:06:58.171Z</td>
-                        <td>13231232.33</td>
-                        <td>12312323 <br>
-                            317263172 <br>
-                            123123888</td>
-                        <td>
-                            <input type="button" value="Editar" class="btn">
-                            <br>
-                            <input type="button" value="Eliminar" class="btn">
-                        </td>
-                    </tr> -->
                 </tbody>
             </table>
     </section>
+    <div class="nuevo-empleado" id="nuevo-empleado">
+        <div class="card">
+            <form id="form-nuevo-empleado">
+                <h3>Nuevo Empleado</h3>
+                <input type="text" name="nombre" id="nombre-nuevo-empleado" placeholder="Ingrese nombre..." required>
+                <input type="text" name="apellido" id="apellido-nuevo-empleado" placeholder="Ingrese apellido..."
+                    required>
+                <div>
+                    <select name="tipoId" id="tipoid-nuevo-empleado">
+                        <option value="cc">CC</option>
+                        <option value="nit">NIT</option>
+                    </select>
+                    <input type="number" name="identificacion" id="identificacion-nuevo-empleado"
+                        placeholder="Identificacion..." required>
+                </div>
+                <input type="email" name="correo" id="correo-nuevo-empleado" placeholder="Ingrese correo...">
+                <div>
+                    <label for="fecha-ingreso-nuevo-empleado">Fecha de Ingreso</label>
+                    <input type="date" name="fecha-ingreso-nuevo-empleado" id="fecha-ingreso-nuevo-empleado">
+                </div>
+                <input type="number" name="salario-nuevo-empleado" id="salario-nuevo-empleado"
+                    placeholder="Ingrese salario..." required>
+                <input type="number" name="telefono1-nuevo-empleado" id="telefono1-nuevo-empleado"
+                    placeholder="Ingrese telefono 1...">
+                <input type="number" name="telefono2-nuevo-empleado" id="telefono2-nuevo-empleado"
+                    placeholder="Ingrese telefono 2...">
+                <input type="number" name="telefono3-nuevo-empleado" id="telefono3-nuevo-empleado"
+                    placeholder="Ingrese telefono 3...">
+                <div>
+                    <input type="submit" class="btn" value="Enviar">
+                    <input type="reset" class="btn" value="Borrar">
+                </div>
+            </form>
+            <i class="fas fa-times-circle" id="icon-cerrar-nuevo"></i>
+        </div>
+    </div>
     <div class="alerta" id="alerta">
         <div class="card">
             <h2 id="texto-alerta"></h2>
