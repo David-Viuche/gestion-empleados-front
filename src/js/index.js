@@ -31,6 +31,7 @@ function cambiarAListaEmpleados(token) {
     document.getElementById("seccion-iniciar-sesion").classList.toggle('invisible');
     document.getElementById("seccion-lista-empleados").classList.toggle('visible');
     document.getElementById("cerrar-sesion").classList.toggle('invisible');
+    peticionEmpleados();
     peticionDatosUsuario();
 }
 
@@ -45,11 +46,9 @@ function verificarSesionIniciada() {
         document.getElementById("seccion-lista-empleados").classList.toggle('visible');
         document.getElementById("cerrar-sesion").classList.toggle('invisible');
         document.getElementById("nombreUsuario").innerText = user.nombre + " " + user.apellido;
+        peticionEmpleados();
     }
 }
-
-//verificacion incial 
-verificarSesionIniciada();
 
 //peticiones al API
 
@@ -168,3 +167,64 @@ const registrarUsuario = () => {
         })
         .catch(error => console.log('error', error));
 }
+
+const peticionEmpleados = () => {
+    var myHeaders = new Headers();
+    const token = sessionStorage.getItem('token');
+    myHeaders.append("Authorization", `Bearer ${token}`);
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch("https://gestion-empleados.herokuapp.com/empleados", requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            const contenedor = document.getElementById('tabla-empleados');
+            let registro = '';
+            result.forEach(el => {
+                registro += `
+                <tr>
+                    <td>${el.nombre}</td>
+                    <td>${el.apellido}</td>
+                    <td>${el.tipoIdentificacion}</td>
+                    <td>${el.numeroIdentificacion}</td>
+                    <td>${el.correo}</td>
+                    <td>${new Date(el.fechaIngreso).toISOString().slice(0, 10)}</td>
+                    <td>$ ${new Intl.NumberFormat('de-DE', { style: 'currency', currency: 'COP' }).format(el.salario)}</td>
+                    <td>`;
+
+                for (let index = 0; index < el.telefonos.length; index++) {
+                    const tel = el.telefonos[index];
+                    if (tel.telefono == null) {
+                        registro += 'Sin telefonos'
+                    } else {
+                        registro += `${tel.telefono}`
+                        if (index != (el.telefonos.length - 1)) {
+                            registro += '<br>';
+                        }
+                    }
+                }
+
+                registro +=
+                    `
+                    </td>
+                    <td>
+                        <input type="button" value="Editar" class="btn">
+                        <br>
+                        <input type="button" value="Eliminar" class="btn">
+                    </td>
+                </tr>
+                
+                `
+                contenedor.innerHTML = registro;
+            });
+        })
+        .catch(error => console.log('error', error));
+}
+
+
+//verificacion incial 
+verificarSesionIniciada();
