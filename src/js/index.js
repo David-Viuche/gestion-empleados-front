@@ -1,3 +1,6 @@
+//elemento general
+const cargando = document.getElementById('cargando');
+
 //event listeners
 document.getElementById('icon-cerrar').addEventListener('click', () => {
     document.getElementById('alerta').classList.toggle('visible');
@@ -97,10 +100,12 @@ const iniciarSesion = () => {
         redirect: 'follow'
     };
 
-    fetch("http://gestion-empleados.herokuapp.com/usuarios/login", requestOptions)
+    cargando.classList.toggle('visible');
+
+    fetch("https://gestion-empleados.herokuapp.com/usuarios/login", requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log("resultado ", result);
+            cargando.classList.toggle('visible')
             if (!result.data) {
                 generarAlerta(result.msg);
             } else {
@@ -121,9 +126,12 @@ const peticionDatosUsuario = () => {
         redirect: 'follow'
     };
 
-    fetch("http://gestion-empleados.herokuapp.com/usuarios", requestOptions)
+    cargando.classList.toggle('visible');
+
+    fetch("https://gestion-empleados.herokuapp.com/usuarios", requestOptions)
         .then(response => response.json())
         .then(result => {
+            cargando.classList.toggle('visible');
             if (!result.error) {
                 sessionStorage.setItem('user', JSON.stringify(result));
                 const user = JSON.parse(sessionStorage.getItem('user'));
@@ -147,9 +155,12 @@ const peticionCerrarSesion = () => {
         redirect: 'follow'
     };
 
-    fetch("http://gestion-empleados.herokuapp.com/usuarios/logout", requestOptions)
+    cargando.classList.toggle('visible');
+
+    fetch("https://gestion-empleados.herokuapp.com/usuarios/logout", requestOptions)
         .then(response => response.json())
         .then(result => {
+            cargando.classList.toggle('visible');
             sessionStorage.clear();
             window.location.reload();
         })
@@ -179,9 +190,12 @@ const registrarUsuario = () => {
         redirect: 'follow'
     };
 
-    fetch("http://gestion-empleados.herokuapp.com/usuarios", requestOptions)
+    cargando.classList.toggle('visible');
+
+    fetch("https://gestion-empleados.herokuapp.com/usuarios", requestOptions)
         .then(response => response.json())
         .then(result => {
+            cargando.classList.toggle('visible');
             if (!result.error) {
                 generarAlerta('Usuario Creado Correctamente');
                 document.getElementById('form-registro').classList.toggle('visible');
@@ -204,10 +218,12 @@ const peticionEmpleados = () => {
         redirect: 'follow'
     };
 
+    cargando.classList.toggle('visible');
+
     fetch("https://gestion-empleados.herokuapp.com/empleados", requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log(result);
+            cargando.classList.toggle('visible');
             if (!result.error) {
                 const contenedor = document.getElementById('tabla-empleados');
                 let registro = '';
@@ -332,9 +348,12 @@ const peticionEmpleadoNuevo = () => {
         redirect: 'follow'
     };
 
+    cargando.classList.toggle('visible');
+
     fetch("https://gestion-empleados.herokuapp.com/empleados", requestOptions)
         .then(response => response.json())
         .then(result => {
+            cargando.classList.toggle('visible');
             if (!result.error) {
                 window.location.reload();
             } else {
@@ -358,9 +377,12 @@ const peticionDatosEmpleadoIdActualizar = (idEmpleado) => {
         redirect: 'follow'
     };
 
+    cargando.classList.toggle('visible');
+
     fetch(`https://gestion-empleados.herokuapp.com/empleados/${idEmpleado}`, requestOptions)
         .then(response => response.json())
         .then(result => {
+            cargando.classList.toggle('visible');
             if (!result.error) {
                 document.getElementById('nombre-actualizar-empleado').value = result.nombre;
                 document.getElementById('apellido-actualizar-empleado').value = result.apellido;
@@ -461,9 +483,12 @@ const peticionActualizarEmpleado = () => {
         redirect: 'follow'
     };
 
+    cargando.classList.toggle('visible');
+
     fetch(`https://gestion-empleados.herokuapp.com/empleados/${idEmpleado}`, requestOptions)
         .then(response => response.text())
         .then(result => {
+            cargando.classList.toggle('visible');
             if (!result.error) {
                 window.location.reload();
             } else {
@@ -486,12 +511,15 @@ const peticionEliminarEmpleado = (idEmpleado) => {
         redirect: 'follow'
     };
 
+    cargando.classList.toggle('visible');
+
     fetch(`https://gestion-empleados.herokuapp.com/empleados/${idEmpleado}`, requestOptions)
         .then(response => response.text())
         .then(result => {
-            if(!result.error){
+            cargando.classList.toggle('visible');
+            if (!result.error) {
                 window.location.reload();
-            }else{
+            } else {
                 sessionStorage.clear();
                 window.location.reload();
             }

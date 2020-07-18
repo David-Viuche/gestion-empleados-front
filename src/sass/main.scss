@@ -24,7 +24,7 @@ header {
         h3 {
             margin-right: 2rem;
         }
-        input{
+        input {
             background: $Color-1 !important;
         }
     }
@@ -111,14 +111,14 @@ header {
     align-items: center;
     margin-bottom: 6rem;
     flex-direction: column;
-    div.titulo-empleados{
+    div.titulo-empleados {
         display: flex;
         justify-content: space-between;
         align-items: center;
         width: 85%;
         margin-top: 2rem;
         color: $Color-4;
-        input{
+        input {
             height: 2.5rem;
         }
     }
@@ -143,7 +143,8 @@ header {
     }
 }
 
-.nuevo-empleado, .actualizar-empleado {
+.nuevo-empleado,
+.actualizar-empleado {
     width: 100%;
     height: 100%;
     justify-content: center;
@@ -179,20 +180,47 @@ header {
             h3 {
                 color: $Color-4;
             }
-            input, select {
+            input,
+            select {
                 border-radius: 0.5rem;
                 padding: 0.2rem;
                 width: 55%;
                 margin: 0.5rem;
             }
-            div{
+            div {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                select{
+                select {
                     width: 30%;
                 }
             }
         }
+    }
+}
+
+.cargando {
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background: #c7cfd959;
+    display: none;
+    i {
+        font-size: 3rem;
+        animation-name: cargando;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+        animation-timing-function: linear;
+    }
+}
+
+@keyframes cargando {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
     }
 }
