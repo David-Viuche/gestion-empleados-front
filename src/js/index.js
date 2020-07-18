@@ -7,6 +7,10 @@ document.getElementById('icon-cerrar-nuevo').addEventListener('click', () => {
     document.getElementById('nuevo-empleado').classList.toggle('visible');
 });
 
+document.getElementById('icon-cerrar-actualizar').addEventListener('click', () => {
+    document.getElementById('actualizar-empleado').classList.toggle('visible');
+});
+
 document.getElementById('form-inicio-sesion').addEventListener('submit', (event) => {
     event.preventDefault();
     iniciarSesion();
@@ -15,6 +19,11 @@ document.getElementById('form-inicio-sesion').addEventListener('submit', (event)
 document.getElementById('form-nuevo-empleado').addEventListener('submit', (event) => {
     event.preventDefault();
     peticionEmpleadoNuevo();
+});
+
+document.getElementById('form-actualizar-empleado').addEventListener('submit', (event) => {
+    event.preventDefault();
+    peticionActualizarEmpleado();
 });
 
 document.getElementById('form-registro').addEventListener('submit', (event) => {
@@ -61,6 +70,12 @@ function verificarSesionIniciada() {
         document.getElementById("nombreUsuario").innerText = user.nombre + " " + user.apellido;
         peticionEmpleados();
     }
+}
+
+function mostrarFormuarioActualizarEmpleado(idEmpleado) {
+    document.getElementById('actualizar-empleado').classList.toggle('visible');
+    document.getElementById('empleadoActualizar').innerText = idEmpleado;
+    peticionDatosEmpleadoIdActualizar(idEmpleado);
 }
 
 //peticiones al API
@@ -196,6 +211,15 @@ const peticionEmpleados = () => {
             if (!result.error) {
                 const contenedor = document.getElementById('tabla-empleados');
                 let registro = '';
+                result.sort(function (a, b) {
+                    if (a.id > b.id) {
+                      return 1;
+                    }
+                    if (a.id < b.id) {
+                      return -1;
+                    }
+                    return 0;
+                  });
                 result.forEach(el => {
                     registro += `
                 <tr>
@@ -224,7 +248,7 @@ const peticionEmpleados = () => {
                         `
                     </td>
                     <td>
-                        <input type="button" value="Editar" class="btn">
+                        <input type="button" value="Editar" class="btn" onClick=mostrarFormuarioActualizarEmpleado(${el.id})>
                         <br>
                         <input type="button" value="Eliminar" class="btn">
                     </td>
@@ -261,30 +285,30 @@ const peticionEmpleadoNuevo = () => {
 
     if (telefono1 || telefono2 || telefono3) {
         telefonos = [];
-        if(telefono1){
+        if (telefono1) {
             telefonos.push(
                 {
-                    "telefono" : telefono1
-                }     
+                    "telefono": telefono1
+                }
             )
         }
-        if(telefono2){
+        if (telefono2) {
             telefonos.push(
                 {
-                    "telefono" : telefono2
-                }     
+                    "telefono": telefono2
+                }
             )
         }
-        if(telefono3){
+        if (telefono3) {
             telefonos.push(
                 {
-                    "telefono" : telefono3
-                }     
+                    "telefono": telefono3
+                }
             )
         }
     }
 
-    if(!fecha){
+    if (!fecha) {
         fecha = null;
     }
 
@@ -311,11 +335,144 @@ const peticionEmpleadoNuevo = () => {
     fetch("https://gestion-empleados.herokuapp.com/empleados", requestOptions)
         .then(response => response.json())
         .then(result => {
-            console.log(result);
+            if (!result.error) {
+                window.location.reload();
+            } else {
+                window.location.reload();
+                sessionStorage.clear();
+            }
         })
         .catch(error => console.log('error', error));
 }
 
+
+const peticionDatosEmpleadoIdActualizar = (idEmpleado) => {
+    var myHeaders = new Headers();
+    const token = sessionStorage.getItem('token');
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch(`https://gestion-empleados.herokuapp.com/empleados/${idEmpleado}`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (!result.error) {
+                document.getElementById('nombre-actualizar-empleado').value = result.nombre;
+                document.getElementById('apellido-actualizar-empleado').value = result.apellido;
+                document.getElementById('tipoid-actualizar-empleado').value = result.tipoIdentificacion;
+                document.getElementById('identificacion-actualizar-empleado').value = result.numeroIdentificacion;
+                if (result.correo) {
+                    document.getElementById('correo-actualizar-empleado').value = result.correo;
+                }
+                if (result.fechaIngreso) {
+                    document.getElementById('fecha-ingreso-actualizar-empleado').value = new Date(result.fechaIngreso).toISOString().slice(0, 10);
+                }
+                document.getElementById('salario-actualizar-empleado').value = result.salario;
+                if (result.telefonos) {
+                    if (result.telefonos[0]) {
+                        document.getElementById('telefono1-actualizar-empleado').value = result.telefonos[0].telefono;
+                    }
+                    if (result.telefonos[1]) {
+                        document.getElementById('telefono2-actualizar-empleado').value = result.telefonos[1].telefono;
+                    }
+                    if (result.telefonos[2]) {
+                        document.getElementById('telefono3-actualizar-empleado').value = result.telefonos[2].telefono;
+                    }
+                }
+            } else {
+                window.location.reload();
+                sessionStorage.clear();
+            }
+        })
+        .catch(error => console.log('error', error));
+}
+
+const peticionActualizarEmpleado = () => {
+    var myHeaders = new Headers();
+    const token = sessionStorage.getItem('token');
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    const nombre = document.getElementById('nombre-actualizar-empleado').value;
+    const apellido = document.getElementById('apellido-actualizar-empleado').value;
+    const tipoId = document.getElementById('tipoid-actualizar-empleado').value;
+    const identificacion = document.getElementById('identificacion-actualizar-empleado').value;
+    const correo = document.getElementById('correo-actualizar-empleado').value;
+    let fecha = document.getElementById('fecha-ingreso-actualizar-empleado').value;
+    const salario = document.getElementById('salario-actualizar-empleado').value;
+    const telefono1 = document.getElementById('telefono1-actualizar-empleado').value;
+    const telefono2 = document.getElementById('telefono2-actualizar-empleado').value;
+    const telefono3 = document.getElementById('telefono3-actualizar-empleado').value;
+    const idEmpleado = document.getElementById('empleadoActualizar').innerText;
+
+    let telefonos = null;
+
+    if (telefono1 || telefono2 || telefono3) {
+        telefonos = [];
+        if (telefono1) {
+            telefonos.push(
+                {
+                    "telefono": telefono1
+                }
+            )
+        }
+        if (telefono2) {
+            telefonos.push(
+                {
+                    "telefono": telefono2
+                }
+            )
+        }
+        if (telefono3) {
+            telefonos.push(
+                {
+                    "telefono": telefono3
+                }
+            )
+        }
+    }
+
+    if (!fecha) {
+        fecha = null;
+    }
+
+    var raw = JSON.stringify(
+        {
+            "nombre": nombre,
+            "apellido": apellido,
+            "tipoIdentificacion": tipoId,
+            "numeroIdentificacion": identificacion,
+            "correo": correo,
+            "fechaIngreso": fecha,
+            "salario": salario,
+            "telefonos": telefonos
+        }
+    );
+
+    var requestOptions = {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+    };
+
+    fetch(`https://gestion-empleados.herokuapp.com/empleados/${idEmpleado}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
+            if(!result.error){
+                window.location.reload();
+            }else {
+                window.location.reload();
+                sessionStorage.clear();
+            }
+        })
+        .catch(error => console.log('error', error));
+}
 
 //verificacion incial 
 verificarSesionIniciada();

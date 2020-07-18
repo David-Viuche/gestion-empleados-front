@@ -74,9 +74,15 @@
         <div class="card">
             <form id="form-nuevo-empleado">
                 <h3>Nuevo Empleado</h3>
-                <input type="text" name="nombre" id="nombre-nuevo-empleado" placeholder="Ingrese nombre..." required>
-                <input type="text" name="apellido" id="apellido-nuevo-empleado" placeholder="Ingrese apellido..."
-                    required>
+                <div>
+                    <label for="nombre-actualizar-empleado">Nombre</label>
+                    <input type="text" name="nombre" id="nombre-nuevo-empleado" placeholder="Ingrese nombre..." required>
+                </div>
+                <div>
+                    <label for="apellido-actualizar-empleado">Apellido</label>
+                    <input type="text" name="apellido" id="apellido-nuevo-empleado" placeholder="Ingrese apellido..."
+                        required>
+                </div>
                 <div>
                     <select name="tipoId" id="tipoid-nuevo-empleado">
                         <option value="cc">CC</option>
@@ -85,25 +91,98 @@
                     <input type="number" name="identificacion" id="identificacion-nuevo-empleado"
                         placeholder="Identificacion..." required>
                 </div>
-                <input type="email" name="correo" id="correo-nuevo-empleado" placeholder="Ingrese correo...">
+                <div>
+                    <label for="correo-actualizar-empleado">Correo</label>
+                    <input type="email" name="correo" id="correo-nuevo-empleado" placeholder="Ingrese correo...">
+                </div>
                 <div>
                     <label for="fecha-ingreso-nuevo-empleado">Fecha de Ingreso</label>
                     <input type="date" name="fecha-ingreso-nuevo-empleado" id="fecha-ingreso-nuevo-empleado">
                 </div>
-                <input type="number" name="salario-nuevo-empleado" id="salario-nuevo-empleado"
-                    placeholder="Ingrese salario..." required>
-                <input type="number" name="telefono1-nuevo-empleado" id="telefono1-nuevo-empleado"
-                    placeholder="Ingrese telefono 1...">
-                <input type="number" name="telefono2-nuevo-empleado" id="telefono2-nuevo-empleado"
-                    placeholder="Ingrese telefono 2...">
-                <input type="number" name="telefono3-nuevo-empleado" id="telefono3-nuevo-empleado"
-                    placeholder="Ingrese telefono 3...">
+                <div>
+                    <label for="salario-actualizar-empleado">Salario</label>
+                    <input type="number" name="salario-nuevo-empleado" id="salario-nuevo-empleado"
+                        placeholder="Ingrese salario..." required>
+                </div>
+                <div>
+                    <label for="telefono1-actualizar-empleado">Telefono 1</label>
+                    <input type="number" name="telefono1-nuevo-empleado" id="telefono1-nuevo-empleado"
+                        placeholder="Ingrese telefono 1...">
+                </div>
+                <div>
+                    <label for="telefono2-actualizar-empleado">Telefono 2</label>
+                    <input type="number" name="telefono2-nuevo-empleado" id="telefono2-nuevo-empleado"
+                        placeholder="Ingrese telefono 2...">
+                </div>
+                <div>
+                    <label for="telefono3-actualizar-empleado">Telefono 3</label>
+                    <input type="number" name="telefono3-nuevo-empleado" id="telefono3-nuevo-empleado"
+                        placeholder="Ingrese telefono 3...">
+                </div>
                 <div>
                     <input type="submit" class="btn" value="Enviar">
                     <input type="reset" class="btn" value="Borrar">
                 </div>
             </form>
             <i class="fas fa-times-circle" id="icon-cerrar-nuevo"></i>
+        </div>
+    </div>
+    <div class="actualizar-empleado" id="actualizar-empleado">
+        <div class="card">
+            <form id="form-actualizar-empleado">
+                <h3>Actualizar Empleado</h3>
+                <label class="invisible" id="empleadoActualizar"></label>
+                <div>
+                    <label for="nombre-actualizar-empleado">Nombre</label>
+                    <input type="text" name="nombre" id="nombre-actualizar-empleado" placeholder="Ingrese nombre..." required>
+                </div>
+                <div>
+                    <label for="apellido-actualizar-empleado">Apellido</label>
+                    <input type="text" name="apellido" id="apellido-actualizar-empleado" placeholder="Ingrese apellido..."
+                        required>
+                </div>
+                <div>
+                    <select name="tipoId" id="tipoid-actualizar-empleado">
+                        <option value="cc">CC</option>
+                        <option value="nit">NIT</option>
+                    </select>
+                    <input type="number" name="identificacion" id="identificacion-actualizar-empleado"
+                        placeholder="Identificacion..." required>
+                </div>
+                <div>
+                    <label for="correo-actualizar-empleado">Correo</label>
+                    <input type="email" name="correo" id="correo-actualizar-empleado" placeholder="Ingrese correo...">
+                </div>
+                <div>
+                    <label for="fecha-ingreso-actualizar-empleado">Fecha de Ingreso</label>
+                    <input type="date" name="fecha-ingreso-actualizar-empleado" id="fecha-ingreso-actualizar-empleado">
+                </div>
+                <div>
+                    <label for="salario-actualizar-empleado">Salario</label>
+                    <input type="number" name="salario-actualizar-empleado" id="salario-actualizar-empleado"
+                        placeholder="Ingrese salario..." required>
+                </div>
+                <div>
+                    <label for="telefono1-actualizar-empleado">Telefono 1</label>
+                    <input type="number" name="telefono1-actualizar-empleado" id="telefono1-actualizar-empleado"
+                        placeholder="Ingrese telefono 1...">
+                </div>
+                <div>
+                    <label for="telefono2-actualizar-empleado">Telefono 2</label>
+                    <input type="number" name="telefono2-actualizar-empleado" id="telefono2-actualizar-empleado"
+                        placeholder="Ingrese telefono 2...">
+                </div>
+                <div>
+                    <label for="telefono3-actualizar-empleado">Telefono 3</label>
+                    <input type="number" name="telefono3-actualizar-empleado" id="telefono3-actualizar-empleado"
+                        placeholder="Ingrese telefono 3...">
+                </div>
+                <div>
+                    <input type="submit" class="btn" value="Enviar">
+                    <input type="reset" class="btn" value="Borrar">
+                </div>
+            </form>
+            <i class="fas fa-times-circle" id="icon-cerrar-actualizar"></i>
         </div>
     </div>
     <div class="alerta" id="alerta">
