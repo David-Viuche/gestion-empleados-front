@@ -213,13 +213,13 @@ const peticionEmpleados = () => {
                 let registro = '';
                 result.sort(function (a, b) {
                     if (a.id > b.id) {
-                      return 1;
+                        return 1;
                     }
                     if (a.id < b.id) {
-                      return -1;
+                        return -1;
                     }
                     return 0;
-                  });
+                });
                 result.forEach(el => {
                     registro += `
                 <tr>
@@ -250,7 +250,7 @@ const peticionEmpleados = () => {
                     <td>
                         <input type="button" value="Editar" class="btn" onClick=mostrarFormuarioActualizarEmpleado(${el.id})>
                         <br>
-                        <input type="button" value="Eliminar" class="btn">
+                        <input type="button" value="Eliminar" class="btn" onClick=peticionEliminarEmpleado(${el.id})>
                     </td>
                 </tr>
                 
@@ -338,8 +338,8 @@ const peticionEmpleadoNuevo = () => {
             if (!result.error) {
                 window.location.reload();
             } else {
-                window.location.reload();
                 sessionStorage.clear();
+                window.location.reload();
             }
         })
         .catch(error => console.log('error', error));
@@ -385,8 +385,8 @@ const peticionDatosEmpleadoIdActualizar = (idEmpleado) => {
                     }
                 }
             } else {
-                window.location.reload();
                 sessionStorage.clear();
+                window.location.reload();
             }
         })
         .catch(error => console.log('error', error));
@@ -464,11 +464,36 @@ const peticionActualizarEmpleado = () => {
     fetch(`https://gestion-empleados.herokuapp.com/empleados/${idEmpleado}`, requestOptions)
         .then(response => response.text())
         .then(result => {
+            if (!result.error) {
+                window.location.reload();
+            } else {
+                sessionStorage.clear();
+                window.location.reload();
+            }
+        })
+        .catch(error => console.log('error', error));
+}
+
+const peticionEliminarEmpleado = (idEmpleado) => {
+    var myHeaders = new Headers();
+    const token = sessionStorage.getItem('token');
+    myHeaders.append("Authorization", `Bearer ${token}`);
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+        method: 'DELETE',
+        headers: myHeaders,
+        redirect: 'follow'
+    };
+
+    fetch(`https://gestion-empleados.herokuapp.com/empleados/${idEmpleado}`, requestOptions)
+        .then(response => response.text())
+        .then(result => {
             if(!result.error){
                 window.location.reload();
-            }else {
-                window.location.reload();
+            }else{
                 sessionStorage.clear();
+                window.location.reload();
             }
         })
         .catch(error => console.log('error', error));
