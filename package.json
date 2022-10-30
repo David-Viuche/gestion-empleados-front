@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/David-Viuche/gestion-empleados-front#readme",
   "dependencies": {
-    "browser-sync": "^2.26.10",
+    "browser-sync": "^2.27.10",
     "gulp": "^4.0.2",
     "gulp-sass": "^4.1.0"
   }
